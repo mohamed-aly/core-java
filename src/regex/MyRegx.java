@@ -1,7 +1,22 @@
 package regex;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class MyRegx {
     public static void main(String[] args) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        String id = "29001092102934";
+        LocalDate date =LocalDate.parse(id.substring(1,7), formatter);
+        LocalDate now = LocalDate.now();
+        System.out.println(date);
+        Period period = date.until(now);
+        System.out.println(period.getYears());
+
+                /*
         String string = "abcDeeekjh78ii665abcDeeef";
 
         //replace any letter with y
@@ -56,5 +71,7 @@ public class MyRegx {
 
         //surrounds avery set of letters or numbers with X
         System.out.println(hasWhiteSpaces.replaceAll("\\b","X"));
+
+                 */
     }
 }
