@@ -8,6 +8,13 @@ public class AnotherThread extends Thread {
 
     @Override
     public void run() {
-        System.out.println(ThreadColor.ANSI_BLUE + "Hello from another class");
+        System.out.println(ThreadColor.ANSI_BLUE + "Hello from " + this.getName());
+        try{
+            Thread.sleep(3000);
+        }catch(Exception ex){
+            System.out.println("Another Thread woke me up!");
+        }
+
+        System.out.println("three seconds have passed and I am awake");
     }
 }
