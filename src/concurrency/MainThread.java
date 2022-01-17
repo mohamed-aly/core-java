@@ -13,6 +13,21 @@ public class MainThread {
         //start() to invoke the new thread
         thread.start();
 
+        //creating anonymous runnable thread
+        new Thread(() ->
+        {
+
+            try {
+                //will join the thread class and wait until it finishes the process
+                thread.join(2000);
+                System.out.println("another thread terminated so I am here");
+            } catch (InterruptedException e) {
+                System.out.println("I could not wait");
+            }
+            System.out.println(ThreadColor.ANSI_RESET + "Hello from anonymous Runnable!");
+        }
+        ).start();
+
         new Thread(() -> System.out.println(ThreadColor.ANSI_PURPLE + "anonymous class process")).start();
 
         //this process will be executed before the new thread process
@@ -22,7 +37,9 @@ public class MainThread {
         Thread runnableThread = new Thread(new RunnableClass());
         runnableThread.start();
 
-        //creating anonymous runnable thread
-        new Thread(() -> System.out.println(ThreadColor.ANSI_RESET + "Hello from anonymous Runnable!")).start();
+        //interrupt the thread
+//        thread.interrupt();
+
+
     }
 }

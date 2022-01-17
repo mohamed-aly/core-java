@@ -10,9 +10,10 @@ public class AnotherThread extends Thread {
     public void run() {
         System.out.println(ThreadColor.ANSI_BLUE + "Hello from " + this.getName());
         try{
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         }catch(Exception ex){
             System.out.println("Another Thread woke me up!");
+            return;
         }
 
         System.out.println("three seconds have passed and I am awake");
