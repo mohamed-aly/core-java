@@ -6,6 +6,7 @@ public class Counter {
 
     private int i;
 
+    //synchronized method to prevent thread interference
     public void countDown() {
         String color;
 
@@ -20,9 +21,12 @@ public class Counter {
                 color = ThreadColor.ANSI_RED;
         }
 
-        for (i = 10; i > 0; i--) {
-            System.out.println(color + Thread.currentThread().getName() + " i = " + i);
+        synchronized (this){
+            for (i = 10; i > 0; i--) {
+                System.out.println(color + Thread.currentThread().getName() + " i = " + i);
+            }
         }
+
     }
 
 }
