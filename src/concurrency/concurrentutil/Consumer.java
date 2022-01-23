@@ -17,22 +17,27 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
+        int counter = 0;
         while (true) {
-            lock.lock();
-            if (buffer.isEmpty()) {
-                lock.unlock();
-                continue;
+            if (lock.tryLock()) {
+                try {
+                    if (buffer.isEmpty()) {
+                        continue;
+                    }
+                    System.out.println(color + "Counter = " + counter);
+                    counter = 0;
+                    if (buffer.get(0).equals("EOF")) {
+                        System.out.println(color + "Exiting");
+                        break;
+                    } else {
+                        System.out.println(color + "Removing... " + buffer.remove(0));
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            }else{
+                counter++;
             }
-
-            if (buffer.get(0).equals("EOF")) {
-                System.out.println(color + "Exiting");
-                lock.unlock();
-                break;
-            } else {
-                System.out.println(color + "Removing... " + buffer.remove(0));
-            }
-            lock.unlock();
-
         }
     }
 }

@@ -23,9 +23,15 @@ public class Producer implements Runnable {
         for (String s : nums) {
             try {
                 System.out.println(color + "Adding... " + s);
+
                 lock.lock();
-                buffer.add(s);
-                lock.unlock();
+                try{
+                    buffer.add(s);
+                }finally {
+                    lock.unlock();
+                }
+
+
                 Thread.sleep(random.nextInt(1000));
             } catch (InterruptedException ex) {
                 System.out.println("Producer was interrupted!");
@@ -33,7 +39,12 @@ public class Producer implements Runnable {
         }
         System.out.println(color + "Adding EOF and exiting.");
         lock.lock();
-        buffer.add("EOF");
-        lock.unlock();
+        try{
+            buffer.add("EOF");
+        }finally {
+            lock.unlock();
+        }
+
+
     }
 }
