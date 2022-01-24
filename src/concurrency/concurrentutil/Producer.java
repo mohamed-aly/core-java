@@ -2,18 +2,17 @@ package concurrency.concurrentutil;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Producer implements Runnable {
 
-    private List<String> buffer;
+    private ArrayBlockingQueue<String> buffer;
     private String color;
-    private ReentrantLock lock;
 
-    public Producer(List<String> buffer, String color, ReentrantLock lock) {
+    public Producer(ArrayBlockingQueue<String> buffer, String color) {
         this.buffer = buffer;
         this.color = color;
-        this.lock = lock;
     }
 
     @Override
@@ -23,14 +22,7 @@ public class Producer implements Runnable {
         for (String s : nums) {
             try {
                 System.out.println(color + "Adding... " + s);
-
-                lock.lock();
-                try{
-                    buffer.add(s);
-                }finally {
-                    lock.unlock();
-                }
-
+                buffer.put(s);
 
                 Thread.sleep(random.nextInt(1000));
             } catch (InterruptedException ex) {
@@ -38,11 +30,11 @@ public class Producer implements Runnable {
             }
         }
         System.out.println(color + "Adding EOF and exiting.");
-        lock.lock();
+
         try{
-            buffer.add("EOF");
-        }finally {
-            lock.unlock();
+            buffer.put("EOF");
+        }catch(InterruptedException e) {
+            System.out.println("Producer Interrupted...");
         }
 
 
