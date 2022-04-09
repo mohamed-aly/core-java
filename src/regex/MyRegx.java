@@ -4,19 +4,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyRegx {
     public static void main(String[] args) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        String id = "29001092102934";
-        LocalDate date =LocalDate.parse(id.substring(1,7), formatter);
-        LocalDate now = LocalDate.now();
-        System.out.println(date);
-        Period period = date.until(now);
-        System.out.println(period.getYears());
-
-                /*
+/*
         String string = "abcDeeekjh78ii665abcDeeef";
 
         //replace any letter with y
@@ -72,6 +65,40 @@ public class MyRegx {
         //surrounds avery set of letters or numbers with X
         System.out.println(hasWhiteSpaces.replaceAll("\\b","X"));
 
-                 */
+        //-----------------------------------------------------------------------------------------
+
+        //Quantifiers Pattern and matchers
+        String third = "abcdeeefffffffiiiiiiiiiiij";
+
+        //e{3} means eee
+        System.out.println(third.replaceAll("(?i)^abcDe{3}", "start "));
+
+        //e{2,5} means between 2 and 5 e's
+        System.out.println(third.replaceAll("(?i)^abcDe{2,5}", "start "));
+
+        //e+ means one e or more
+        System.out.println(third.replaceAll("(?i)^abcDe+", "start "));
+
+        //e* means zero e or more
+        System.out.println(third.replaceAll("(?i)^abcDe*", "start "));
+
+        //e? means zero e or one
+        System.out.println(third.replaceAll("(?i)^abcDe?", "start "));
+
+        System.out.println(third.replaceAll("f+i*j", " end"));
+*/
+
+        StringBuilder builder = new StringBuilder("<h1>Heading</h1>");
+        builder.append("<h2>Sun-heading</h2>");
+        builder.append("<p>p1</p>");
+        builder.append("<p>p2</p>");
+        builder.append("<h2>summary</h2>");
+
+        String h2Pattern = ".*<h[2-7]>.*</h[2-7]>.*";
+        Pattern pattern = Pattern.compile(h2Pattern);
+        Matcher matcher = pattern.matcher(builder.toString());
+        System.out.println(matcher.matches());
+
+
     }
 }
