@@ -93,11 +93,22 @@ public class MyRegx {
         builder.append("<p>p1</p>");
         builder.append("<p>p2</p>");
         builder.append("<h2>summary</h2>");
-
-        String h2Pattern = ".*<h[2-7]>.*</h[2-7]>.*";
-        Pattern pattern = Pattern.compile(h2Pattern);
+/*
+        String hPattern = ".*<h[2-7]>.*</h[2-7]>.*";
+        Pattern pattern = Pattern.compile(hPattern);
         Matcher matcher = pattern.matcher(builder.toString());
         System.out.println(matcher.matches());
+*/
+        String h2Pattern = "(<h2>)(.*?)(</h2>)";
+        Pattern pattern2 = Pattern.compile(h2Pattern);
+        Matcher matcher2 = pattern2.matcher(builder.toString());
+
+        System.out.println(matcher2.groupCount());
+
+        while (matcher2.find()){
+
+            System.out.println(matcher2.group(2));
+        }
 
 
     }
